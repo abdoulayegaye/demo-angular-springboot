@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import tech.xoslu.backend.dtos.NewPaymentDTO;
 import tech.xoslu.backend.entities.Payment;
 import tech.xoslu.backend.entities.PaymentStatus;
 import tech.xoslu.backend.entities.PaymentType;
@@ -38,9 +39,7 @@ public class PaymentService {
         return paymentRepository.save(payment);
     }
 
-    public Payment savePayment(MultipartFile file, LocalDate date,
-                               double amount, PaymentType type,
-                               String studentCode) throws IOException {
+    public Payment savePayment(MultipartFile file, NewPaymentDTO newPaymentDTO) throws IOException {
         Path folderPath = Paths.get(System.getProperty("user.home"), "xoslu-data", "payments");
         if(!Files.exists(folderPath)){
             Files.createDirectories(folderPath);
@@ -48,13 +47,13 @@ public class PaymentService {
         String fileName = UUID.randomUUID().toString();
         Path filePath = Paths.get(System.getProperty("user.home"), "xoslu-data", "payments", fileName + ".pdf");
         Files.copy(file.getInputStream(), filePath);
-        Student student = studentRepository.findByCode(studentCode);
+        Student student = studentRepository.findByCode(newPaymentDTO.getStudentCode());
         Payment payment = Payment.builder()
-                .paymentDate(date)
+                .paymentDate(newPaymentDTO.getDate())
                 .student(student)
                 .status(PaymentStatus.CREATED)
-                .amount(amount)
-                .type(type)
+                .amount(newPaymentDTO.getAmount())
+                .type(newPaymentDTO.getType())
                 .file(filePath.toUri().toString())
                 .build();
         return paymentRepository.save(payment);

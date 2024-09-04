@@ -3,6 +3,7 @@ package tech.xoslu.backend.web;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import tech.xoslu.backend.dtos.NewPaymentDTO;
 import tech.xoslu.backend.dtos.PaymentDTO;
 import tech.xoslu.backend.entities.Payment;
 import tech.xoslu.backend.entities.PaymentStatus;
@@ -26,7 +27,8 @@ public class PaymentRestController {
     private PaymentService paymentService;
     private PaymentMapper paymentMapper;
 
-    public PaymentRestController(StudentRepository studentRepository, PaymentRepository paymentRepository) {
+    public PaymentRestController(StudentRepository studentRepository, PaymentRepository paymentRepository,
+                                PaymentService paymentService, PaymentMapper paymentMapper) {
         this.studentRepository = studentRepository;
         this.paymentRepository = paymentRepository;
         this.paymentService = paymentService;
@@ -79,10 +81,8 @@ public class PaymentRestController {
     }
 
     @PostMapping(path = "/payments", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public Payment savePayment(@RequestParam MultipartFile file, LocalDate date,
-                               double amount, PaymentType type,
-                               String studentCode) throws IOException {
-        return paymentService.savePayment(file, date, amount, type, studentCode);
+    public Payment savePayment(@RequestParam("file") MultipartFile file, NewPaymentDTO newPaymentDTO) throws IOException {
+        return paymentService.savePayment(file, newPaymentDTO);
     }
 
     @GetMapping(path = "/paymentFile/{paymentId}", produces = MediaType.APPLICATION_PDF_VALUE)
