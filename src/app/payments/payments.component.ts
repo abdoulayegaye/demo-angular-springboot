@@ -19,7 +19,7 @@ export class PaymentsComponent implements OnInit{
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private router : Router, private http : HttpClient, private studentService : StudentsService) {
+  constructor(private studentService : StudentsService) {
   }
 
   ngOnInit() {

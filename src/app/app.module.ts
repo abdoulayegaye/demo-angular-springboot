@@ -24,11 +24,24 @@ import { LoadStudentsComponent } from './load-students/load-students.component';
 import {MatTable, MatTableModule} from "@angular/material/table";
 import {MatPaginator, MatPaginatorModule} from "@angular/material/paginator";
 import {MatSort, MatSortHeader, MatSortModule} from "@angular/material/sort";
-import {MatFormField, MatInput, MatLabel} from "@angular/material/input";
+import {MatFormField, MatHint, MatInput, MatLabel} from "@angular/material/input";
 import {ReactiveFormsModule} from "@angular/forms";
 import {AuhtGuard} from "./guards/auht.guard";
 import {AuthorizationGuard} from "./guards/authorization.guard";
 import {HttpClientModule} from "@angular/common/http";
+import { StudentDetailsComponent } from './student-details/student-details.component';
+import { NewPaymentComponent } from './new-payment/new-payment.component';
+import {
+  MatDatepicker,
+  MatDatepickerInput,
+  MatDatepickerModule,
+  MatDatepickerToggle
+} from "@angular/material/datepicker";
+import {MatNativeDateModule} from "@angular/material/core";
+import {MatSelect, MatSelectModule} from "@angular/material/select";
+import {PdfViewerModule} from "ng2-pdf-viewer";
+import {MatProgressSpinner, MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import { PaymentDetailsComponent } from './payment-details/payment-details.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +54,10 @@ import {HttpClientModule} from "@angular/common/http";
     StudentsComponent,
     PaymentsComponent,
     LoadPaymentsComponent,
-    LoadStudentsComponent
+    LoadStudentsComponent,
+    StudentDetailsComponent,
+    NewPaymentComponent,
+    PaymentDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -65,7 +81,13 @@ import {HttpClientModule} from "@angular/common/http";
     MatFormField,
     MatLabel,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatHint,
+    MatSelectModule,
+    PdfViewerModule,
+    MatProgressSpinnerModule
   ],
   providers: [
     provideAnimationsAsync(),

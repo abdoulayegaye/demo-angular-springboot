@@ -4,6 +4,7 @@ import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {Router} from "@angular/router";
 import {StudentsService} from "../services/students.service";
+import {Student} from "../models/students.model";
 
 @Component({
   selector: 'app-students',
@@ -12,7 +13,7 @@ import {StudentsService} from "../services/students.service";
 })
 export class StudentsComponent implements OnInit{
 
-  public students: any;
+  students!: Array<Student>;
   public dataSource: any;
   public displayedColumns = ["id", "code", "firstName", "lastName", "programId", "photo", "payments"];
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -41,7 +42,7 @@ export class StudentsComponent implements OnInit{
     this.dataSource.filter = value
   }
 
-  getPayments(student: any) {
-    this.router.navigateByUrl("/payments")
+  studentPayments(student: Student) {
+    this.router.navigateByUrl(`/admin/student-details/${student.code}`)
   }
 }
